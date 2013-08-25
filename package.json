@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "github": "~0.1.8",
-    "yeoman-generator": "~0.13.0"
+    "yeoman-generator": "~0.13.0",
+    "coffee-script": "~1.6.3"
   },
   "devDependencies": {
     "mocha": "~1.12.0"
