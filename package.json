@@ -1,21 +1,29 @@
 {
-  "name": "generator-generator",
+  "name": "generator-generatorcs",
   "version": "0.3.0",
-  "description": "Generator Generator for Yeoman",
+  "description": "CoffeeScript Generator Generator for Yeoman",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "coffeescript"
   ],
-  "homepage": "https://github.com/yeoman/generator-generator",
-  "bugs": "https://github.com/yeoman/generator-generator/issues",
+  "homepage": "https://github.com/tuxracer/generator-generatorcs",
+  "bugs": "https://github.com/tuxracer/generator-generatorcs/issues",
   "author": {
-    "name": "Pascal Hartig",
-    "email": "phartig@rdrei.net",
-    "url": "http://yeoman.io"
+    "name": "Derek Petersen",
+    "email": "tuxracer@gmail.com",
+    "url": "https://github.com/tuxracer/"
   },
+  "contributors": [
+    {
+      "name": "Pascal Hartig",
+      "email": "phartig@rdrei.net",
+      "url": "http://yeoman.io"
+    }
+  ],
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yeoman/generator-generator.git"
+    "url": "https://github.com/tuxracer/generator-generatorcs.git"
   },
   "scripts": {
     "test": "mocha"

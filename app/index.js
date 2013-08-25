@@ -31,7 +31,7 @@ var githubUserInfo = function (name, cb) {
   });
 };
 
-function GeneratorGenerator(args, options) {
+function GeneratorGeneratorcs(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname,
@@ -45,9 +45,9 @@ function GeneratorGenerator(args, options) {
   });
 }
 
-util.inherits(GeneratorGenerator, yeoman.generators.Base);
+util.inherits(GeneratorGeneratorcs, yeoman.generators.Base);
 
-GeneratorGenerator.prototype.askFor = function askFor() {
+GeneratorGeneratorcs.prototype.askFor = function askFor() {
   var done = this.async();
   var generatorName = extractGeneratorName(this._, this.appname);
 
@@ -72,7 +72,7 @@ GeneratorGenerator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
-GeneratorGenerator.prototype.userInfo = function userInfo() {
+GeneratorGeneratorcs.prototype.userInfo = function userInfo() {
   var done = this.async();
 
   githubUserInfo(this.githubUser, function (res) {
@@ -84,7 +84,7 @@ GeneratorGenerator.prototype.userInfo = function userInfo() {
   }.bind(this));
 };
 
-GeneratorGenerator.prototype.projectfiles = function projectfiles() {
+GeneratorGeneratorcs.prototype.projectfiles = function projectfiles() {
   this.template('_package.json', 'package.json');
   this.template('editorconfig', '.editorconfig');
   this.template('jshintrc', '.jshintrc');
@@ -93,18 +93,19 @@ GeneratorGenerator.prototype.projectfiles = function projectfiles() {
   this.template('LICENSE');
 };
 
-GeneratorGenerator.prototype.gitfiles = function gitfiles() {
+GeneratorGeneratorcs.prototype.gitfiles = function gitfiles() {
   this.copy('gitattributes', '.gitattributes');
   this.copy('gitignore', '.gitignore');
 };
 
-GeneratorGenerator.prototype.app = function app() {
+GeneratorGeneratorcs.prototype.app = function app() {
   this.mkdir('app');
   this.mkdir('app/templates');
   this.template('app/index.js');
+  this.template('app/index.coffee');
 };
 
-GeneratorGenerator.prototype.templates = function copyTemplates() {
+GeneratorGeneratorcs.prototype.templates = function copyTemplates() {
   this.copy('editorconfig', 'app/templates/editorconfig');
   this.copy('jshintrc', 'app/templates/jshintrc');
   this.copy('travis.yml', 'app/templates/travis.yml');
@@ -112,10 +113,10 @@ GeneratorGenerator.prototype.templates = function copyTemplates() {
   this.copy('app/templates/_bower.json', 'app/templates/_bower.json');
 };
 
-GeneratorGenerator.prototype.tests = function tests() {
+GeneratorGeneratorcs.prototype.tests = function tests() {
   this.mkdir('test');
   this.template('test-load.js', 'test/test-load.js');
   this.template('test-creation.js', 'test/test-creation.js');
 };
 
-module.exports = GeneratorGenerator;
+module.exports = GeneratorGeneratorcs;

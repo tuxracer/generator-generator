@@ -1,26 +1,26 @@
-# Yeoman Generator for Yeoman Generators
+# Yeoman Generator for CoffeeScript Yeoman Generators
 [![Build Status](https://secure.travis-ci.org/yeoman/generator-generator.png?branch=master)](https://travis-ci.org/yeoman/generator-generator)
 
-Maintainer: [Pascal Hartig](https://github.com/passy)
+Fork of [generator-generator](https://github.com/yeoman/generator-generator) which is maintained by: [Pascal Hartig](https://github.com/passy)
 
 ![Yo dawg, I heard you like generators?](http://i.imgur.com/2gqiift.jpg)
 
-`generator-generator` scaffolds out a new basic Yeoman generator with some
+`generator-generatorcs` scaffolds out a new basic Yeoman generator with some
 sensible defaults.
 
 ## Commands
 
-* `yo generator` shows a wizard for generating a new generator
-* `yo generator:subgenerator NAME` generates a subgenerator with the name NAME
+* `yo generatorcs` shows a wizard for generating a new generator
+* `yo generatorcs:subgenerator NAME` generates a subgenerator with the name NAME
 
 ## What do you get?
 
-`generator-generator` scaffolds out a complete project directory structure for
+`generator-generatorcs` scaffolds out a complete project directory structure for
 you.
 
     .
     ├── app
-    │   ├── index.js
+    │   ├── index.coffee
     │   └── templates
     │       ├── editorconfig
     │       └── jshintrc
@@ -36,41 +36,8 @@ you.
         └── test-load.js
 
 ## Getting started
-- Install: `npm install -g generator-generator`
-- Run: `yo generator`
-
-## Changelog
-
-* 0.3.0
-    * Updated for generator 0.13.0.
-    * Added yo peer dependency.
-
-* 0.2.2
-    * Updated dependencies.
-
-* 0.2.1
-    * The name specified in the prompt is now used in `package.json`.
-    * `generator-generator` officially replaced the built-in generator that was
-      bundled with yo.
-
-* 0.2
-    * Added subgenerator for subgenerators
-    * Generated generator now generates package.json, component.json and
-      installs them by default.
-
-* 0.1.1
-    * Upgraded mocha to 1.9.0
-    * Include `.travis.yml`
-
-## Contributing
-
-See the [contribution
-docs](https://github.com/yeoman/yeoman/blob/master/contributing.md).
-
-When submitting an issue, please follow [the
-guidelines](https://github.com/yeoman/yeoman/blob/master/contributing.md#issue-submission).
-Especially important is to make sure Yeoman is up-to-date, and providing the
-command or commands that cause the issue.
+- Install: `npm install -g generator-generatorcs`
+- Run: `yo generatorcs`
 
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
