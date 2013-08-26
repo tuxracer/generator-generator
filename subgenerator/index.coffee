@@ -1,4 +1,3 @@
-util = require 'util'
 yeoman = require 'yeoman-generator'
 
 module.exports = class SubGeneratorGenerator extends yeoman.generators.NamedBase

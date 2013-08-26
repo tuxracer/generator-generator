@@ -1,4 +1,3 @@
-util = require 'util'
 yeoman = require 'yeoman-generator'
 
 module.exports = class <%= _.classify(generatorName) %>Generator extends yeoman.generators.NamedBase
