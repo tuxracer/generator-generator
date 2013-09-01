@@ -86,5 +86,5 @@ module.exports = class GeneratorGeneratorcs extends yeoman.generators.Base
 
   tests: ->
     @mkdir 'test'
-    @template 'test-load.js', 'test/test-load.js'
-    @template 'test-creation.js', 'test/test-creation.js'
+    @template 'test-load.coffee', 'test/test-load.coffee'
+    @template 'test-creation.coffee', 'test/test-creation.coffee'
