@@ -32,8 +32,8 @@ you.
     ├── package.json
     ├── README.md
     └── test
-        ├── test-creation.js
-        └── test-load.js
+        ├── test-creation.coffee
+        └── test-load.coffee
 
 ## Getting started
 - Install: `npm install -g generator-generatorcs`
