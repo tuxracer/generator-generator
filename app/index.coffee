@@ -21,7 +21,8 @@ githubUserInfo = (name, cb) ->
 
 module.exports = class GeneratorGeneratorcs extends yeoman.generators.Base
   constructor: (args, options) ->
-    yeoman.generators.Base.apply this, arguments
+    super
+    
     @pkg = JSON.parse @readFileAsString path.join __dirname, '../package.json'
     @currentYear = (new Date()).getFullYear()
     @on 'end', ->
