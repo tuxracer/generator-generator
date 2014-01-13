@@ -2,7 +2,8 @@ yeoman = require 'yeoman-generator'
 
 module.exports = class SubGeneratorGenerator extends yeoman.generators.NamedBase
   constructor: ->
-    yeoman.generators.NamedBase.apply this, arguments
+    super
+    
     unless @name
       @log.error 'You have to provide a name for the subgenerator.'
       process.exit 1
