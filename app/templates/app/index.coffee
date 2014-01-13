@@ -3,7 +3,8 @@ yeoman = require 'yeoman-generator'
 
 module.exports = class <%= _.classify(generatorName) %>Generator extends yeoman.generators.Base
   constructor: (args, options, config) ->
-    yeoman.generators.Base.apply this, arguments
+    super
+    
     @on 'end', ->
       @installDependencies skipInstall: options['skip-install']
 
