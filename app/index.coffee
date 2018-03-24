@@ -1,91 +1,84 @@
 path = require 'path'
-util = require 'util'
-yeoman = require 'yeoman-generator'
-GitHubApi = require 'github'
-github = new GitHubApi version: '3.0.0'
+Generator = require 'yeoman-generator'
+askName = require 'inquirer-npm-name'
+_ = require 'lodash'
+extend = require 'deep-extend'
+mkdirp = require 'mkdirp'
 
-extractGeneratorName = (_, appname) ->
-  slugged = _.slugify appname
-  match = slugged.match /^generator-(.+)/
-  if match and match.length is 2
-    match[1].toLowerCase()
-  else
-    slugged
+makeGeneratorName = (name) ->
+  name = _.kebabCase(name)
+  name =
+    if name.indexOf('generator-') is 0
+      name
+    else
+      'generator-' + name
 
-githubUserInfo = (name, cb) ->
-  github.user.getFrom
-    user: name
-  , (err, res) ->
-    throw err if err
-    cb JSON.parse JSON.stringify res
+module.exports = class extends Generator
+  initializing: ->
+    @props = {}
 
-module.exports = class GeneratorGeneratorcs extends yeoman.generators.Base
-  constructor: (args, options) ->
-    super
-    
-    @pkg = JSON.parse @readFileAsString path.join __dirname, '../package.json'
-    @currentYear = (new Date()).getFullYear()
-    @on 'end', ->
-      @npmInstall() unless options['skip-install']
+  prompting: ->
+    askName {
+      name: 'name'
+      message: 'Your generator name',
+      default: makeGeneratorName path.basename(process.cwd())
+      filter: makeGeneratorName,
+      validate: (str)->
+        str.length > 'generator-'.length
+    }, this
+    .then (props) =>
+      @props.name = props.name
 
-  askFor: ->
-    done = @async()
-    generatorName = extractGeneratorName @_, @appname
+  default: ->
+    if path.basename(@destinationPath()) isnt @props.name
+      this.log "Your generator must be inside a folder named #{@props.name}\n\
+        I'll automatically create this folder."
+      mkdirp @props.name
+      @destinationRoot @destinationPath(@props.name)
 
-    # have Yeoman greet the user.
-    console.log @yeoman
-    prompts = [
-      name: 'githubUser'
-      message: 'Would you mind telling me your username on Github?'
-      default: 'someuser'
-    ,
-      name: 'generatorName'
-      message: 'What\'s the base name of your generator?'
-      default: generatorName
-    ]
+    readmeTpl = _.template @fs.read(@templatePath('README.md'))
 
-    @prompt prompts, (props) =>
-      @githubUser = props.githubUser
-      @generatorName = props.generatorName
-      @appname = "generator-#{@generatorName}"
-      done()
+    @composeWith require.resolve('generator-node/generators/app'), {
+      boilerplate: false
+      name: @props.name
+      projectRoot: 'generators'
+      skipInstall: @options.skipInstall
+      readme: readmeTpl {
+        generatorName: @props.name
+        yoName: @props.name.replace 'generator-', ''
+      }
+    }
 
-  userInfo: ->
-    done = @async()
+    @composeWith require.resolve('../subgenerator'), {
+      arguments: ['app']
+    }
 
-    #jshint camelcase:false
-    githubUserInfo @githubUser, (res) ->
-      @realname = res.name
-      @email = res.email
-      @githubUrl = res.html_url
-      done()
+  writing: ->
+    pkg = @fs.readJSON @destinationPath('package.json'), {}
+    generatorGeneratorPkg = require '../package.json'
 
-  projectfiles: ->
-    @template '_package.json', 'package.json'
-    @template 'editorconfig', '.editorconfig'
-    @template 'jshintrc', '.jshintrc'
-    @template 'travis.yml', '.travis.yml'
-    @template 'README.md'
-    @template 'LICENSE'
+    extend pkg,
+      dependencies:
+        'yeoman-generator':
+          generatorGeneratorPkg.dependencies['yeoman-generator']
+        chalk:
+          generatorGeneratorPkg.dependencies.chalk
+        yosay: generatorGeneratorPkg.dependencies.yosay
+        coffeescript: generatorGeneratorPkg.dependencies.coffeescript
+      devDependencies:
+        'yeoman-test':
+          generatorGeneratorPkg.devDependencies['yeoman-test']
+        'yeoman-assert':
+          generatorGeneratorPkg.devDependencies['yeoman-assert']
+      jest:
+        testPathIgnorePatterns: ['templates']
+    pkg.keywords = pkg.keywords or []
+    pkg.keywords.push 'yeoman-generator'
 
-  gitfiles: ->
-    @copy 'gitattributes', '.gitattributes'
-    @copy 'gitignore', '.gitignore'
+    @fs.writeJSON @destinationPath('package.json'), pkg
 
-  app: ->
-    @mkdir 'app'
-    @mkdir 'app/templates'
-    @template 'app/index.js'
-    @template 'app/index.coffee'
+  conflicts: ->
+    @fs.append @destinationPath('.eslintignore'), '**/templates\n'
 
-  copyTemplates: ->
-    @copy 'editorconfig', 'app/templates/editorconfig'
-    @copy 'jshintrc', 'app/templates/jshintrc'
-    @copy 'travis.yml', 'app/templates/travis.yml'
-    @copy 'app/templates/_package.json', 'app/templates/_package.json'
-    @copy 'app/templates/_bower.json', 'app/templates/_bower.json'
-
-  tests: ->
-    @mkdir 'test'
-    @template 'test-load.coffee', 'test/test-load.coffee'
-    @template 'test-creation.coffee', 'test/test-creation.coffee'
+  install: ->
+    @installDependencies({bower: false})
