@@ -28,4 +28,6 @@ module.exports = class extends Generator
       @destinationPath('somefile.coffee')
 
   install: ->
-    @installDependencies()
+    # right now there is nothing to install but if there were here you would do it.
+    # @installDependencies { bower: false }
+    return # be sure to put this after any intsallation to ensure it finishes.
