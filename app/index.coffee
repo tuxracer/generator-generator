@@ -82,3 +82,4 @@ module.exports = class extends Generator
 
   install: ->
     @installDependencies({bower: false})
+    return
