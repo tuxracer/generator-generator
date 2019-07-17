@@ -1,6 +1,8 @@
 # Yeoman Generator for CoffeeScript Yeoman Generators
 [![Build Status](https://secure.travis-ci.org/yeoman/generator-generator.png?branch=master)](https://travis-ci.org/yeoman/generator-generator)
 
+# NOTICE: No longer maintained. Feel free to use/create a fork if you are interested.
+
 Fork of [generator-generator](https://github.com/yeoman/generator-generator) which is maintained by: [Pascal Hartig](https://github.com/passy)
 
 ![Yo dawg, I heard you like generators?](http://i.imgur.com/2gqiift.jpg)
