@@ -1,8 +1,8 @@
 'use strict';
-var util = require('util');
-var yeoman = require('yeoman-generator');
+const util = require('util');
+const yeoman = require('yeoman-generator');
 
-var FooGenerator = module.exports = function FooGenerator(args, options, config) {
+const FooGenerator = function() {
   // By calling `NamedBase` here, we get the argument to the subgenerator call
   // as `this.name`.
   yeoman.generators.NamedBase.apply(this, arguments);
@@ -12,6 +12,8 @@ var FooGenerator = module.exports = function FooGenerator(args, options, config)
 
 util.inherits(FooGenerator, yeoman.generators.NamedBase);
 
-FooGenerator.prototype.files = function files() {
+FooGenerator.prototype.files = function() {
   this.copy('somefile.js', 'somefile.js');
 };
+
+module.exports = FooGenerator;
